@@ -1,0 +1,541 @@
+/* DestinationList 专属样式 */
+
+.dest-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden; /* Ensure it constrains height */
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* Search Box Autocomplete */
+.search-box-container {
+  position: relative;
+  margin-bottom: 16px;
+  z-index: 20;
+  flex-shrink: 0;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-dest-input {
+  width: 100%;
+  padding-left: 40px;
+  padding-right: 32px;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.search-clear-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.08);
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(10, 10, 18, 0.95);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), var(--neon-shadow-primary);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  z-index: 100;
+  animation: slide-in-top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slide-in-top {
+  from { transform: translateY(-8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.suggest-pin {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.suggest-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.suggest-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggest-addr {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amap-search-status {
+  padding: 12px 14px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* Destinations Scrolling list */
+.destinations-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-gutter: stable; /* Pre-allocate scrollbar width for zero jumpiness */
+}
+
+.destinations-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  border: 1px dashed var(--glass-border);
+  border-radius: var(--border-radius-lg);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.destination-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.destination-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.destination-card {
+  position: relative;
+  padding: 12px 12px 12px 42px;
+  border-left-width: 4px;
+  margin-left: 12px;
+  transition: var(--transition-smooth);
+  animation: card-appear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes card-appear {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.destination-card:hover {
+  transform: translateX(4px);
+  background: rgba(20, 20, 35, 0.75);
+}
+
+.destination-card.border-start {
+  border-left-color: var(--accent-success);
+}
+
+.destination-card.border-end {
+  border-left-color: var(--accent-error);
+}
+
+.destination-card:not(.border-start):not(.border-end) {
+  border-left-color: var(--accent-primary);
+}
+
+/* Indicator badges */
+.dest-node-badge {
+  position: absolute;
+  left: -14px;
+  top: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+.badge-start {
+  background: var(--accent-success);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.badge-end {
+  background: var(--accent-error);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.badge-waypoint {
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+/* Card details styling */
+.dest-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dest-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.dest-card-header h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dest-actions {
+  display: flex;
+  gap: 2px;
+  opacity: 0.3;
+  transition: var(--transition-smooth);
+}
+
+.destination-card:hover .dest-actions {
+  opacity: 1;
+}
+
+.dest-actions button {
+  padding: 4px;
+}
+
+.dest-actions button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.dest-address {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stay-duration-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(255,255,255,0.04);
+}
+
+.dest-day-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.calendar-day-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: var(--accent-secondary);
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.day-select {
+  min-width: 76px;
+}
+
+.duration-icon {
+  color: var(--accent-secondary);
+}
+
+.duration-select {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-sm);
+  padding: 1px 4px;
+  outline: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.duration-select:focus {
+  border-color: var(--accent-primary);
+}
+
+/* Route Connector Line & Travel Selection Bubble */
+.route-connector-line {
+  position: relative;
+  margin-left: 22px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.connector-path {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-image: linear-gradient(to bottom, var(--glass-border) 40%, transparent 40%);
+  background-size: 2px 8px;
+}
+
+.connector-travel-selector-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 12px;
+  border-radius: 24px;
+  background: rgba(15, 15, 27, 0.9);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.35), 0 0 10px rgba(6, 182, 212, 0.05);
+  margin-left: 16px;
+  z-index: 2;
+  transition: var(--transition-smooth);
+}
+
+.connector-travel-selector-bubble:hover {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 12px rgba(6, 182, 212, 0.25);
+}
+
+.segment-transport-select-inline {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  padding-right: 4px;
+  transition: var(--transition-smooth);
+  width: 68px;
+}
+
+.segment-transport-select-inline option {
+  background: #0d0d16;
+  color: var(--text-primary);
+}
+
+.segment-travel-metrics {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 10px;
+}
+
+.metrics-duration {
+  color: var(--accent-secondary);
+  text-shadow: 0 0 4px rgba(6, 182, 212, 0.2);
+}
+
+.metrics-divider {
+  color: var(--text-muted);
+}
+
+.metrics-distance {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 720px) {
+  .section-title {
+    margin-bottom: 12px;
+    font-size: 1rem;
+  }
+
+  .search-box-container {
+    margin-bottom: 12px;
+  }
+
+  .suggestions-dropdown {
+    max-height: 240px;
+  }
+
+  .destinations-scroll-area {
+    padding-right: 0;
+    scrollbar-gutter: auto;
+  }
+
+  .destination-card {
+    margin-left: 10px;
+    padding: 12px 10px 12px 34px;
+  }
+
+  .destination-card:hover {
+    transform: none;
+  }
+
+  .dest-card-header {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dest-card-header h4 {
+    min-width: 0;
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .dest-actions {
+    flex-shrink: 0;
+    opacity: 1;
+  }
+
+  .dest-address {
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .dest-day-selector,
+  .stay-duration-selector {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    line-height: 1.45;
+  }
+
+  .duration-select {
+    min-height: 28px;
+  }
+
+  .route-connector-line {
+    height: auto;
+    min-height: 58px;
+    margin-left: 20px;
+    padding: 10px 0;
+  }
+
+  .connector-travel-selector-bubble {
+    width: calc(100% - 16px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-left: 14px;
+    border-radius: var(--border-radius-md);
+  }
+
+  .segment-transport-select-inline {
+    min-height: 28px;
+  }
+
+  .segment-travel-metrics {
+    min-width: 0;
+    flex-wrap: wrap;
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .destination-card {
+    padding-left: 32px;
+  }
+
+  .dest-node-badge {
+    left: -12px;
+    width: 22px;
+    height: 22px;
+    font-size: 0.68rem;
+  }
+
+  .dest-actions {
+    gap: 0;
+  }
+
+  .dest-actions button {
+    padding: 3px;
+  }
+}

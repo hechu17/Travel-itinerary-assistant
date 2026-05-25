@@ -1,0 +1,386 @@
+/* ItineraryTimeline 专属样式 */
+
+.itinerary-timeline-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.start-time-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.time-input {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-sm);
+  padding: 3px 6px;
+  outline: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.date-input {
+  min-width: 124px;
+}
+
+.time-input:focus {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+}
+
+.timeline-empty {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--glass-border);
+}
+
+.timeline-clock-icon {
+  color: var(--text-muted);
+}
+
+/* Timeline Layout Backbone */
+.timeline-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.timeline-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 32px;
+}
+
+.timeline-day-section {
+  margin-bottom: 18px;
+}
+
+.timeline-day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius-md);
+}
+
+.day-title {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.day-date {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.day-summary {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+}
+
+.day-summary span {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.timeline-day-empty {
+  margin: 8px 0 14px 32px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.timeline-backbone {
+  position: absolute;
+  left: 11px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+/* Destination Node Card */
+.timeline-card-node {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.timeline-indicator {
+  position: absolute;
+  left: -32px;
+  top: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+.timeline-indicator.green {
+  background: var(--accent-success);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.timeline-indicator.red {
+  background: var(--accent-error);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.timeline-indicator.purple {
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+.timeline-content {
+  padding: 12px 14px;
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-smooth);
+}
+
+.timeline-content:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.timeline-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.06);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.day-cross-tag {
+  color: var(--accent-warning);
+  font-size: 0.65rem;
+  margin-left: 4px;
+  text-shadow: 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+.timeline-dest-details h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.dest-action-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.dest-address-sub {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Play/Stay Connector Node */
+.timeline-stay-node {
+  position: relative;
+  padding-left: 12px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-connector-sub {
+  position: absolute;
+  left: -21px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.timeline-stay-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stay-duration-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.stay-time-range {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* Travel Connector Node */
+.timeline-travel-node {
+  position: relative;
+  padding-left: 12px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-transfer-node {
+  position: relative;
+  padding-left: 12px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-connector-sub.travel-dash {
+  background-image: linear-gradient(to bottom, var(--accent-secondary) 40%, transparent 40%);
+  background-size: 2px 6px;
+  background-color: transparent;
+}
+
+.timeline-travel-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--accent-secondary);
+  text-shadow: 0 0 5px rgba(6, 182, 212, 0.15);
+}
+
+.travel-compass-icon {
+  animation: compass-spin 6s infinite linear;
+}
+
+.travel-time-range {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.timeline-transfer-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  color: var(--accent-warning);
+}
+
+.transfer-route-metrics {
+  color: var(--text-muted);
+}
+
+@media (max-width: 720px) {
+  .timeline-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .timeline-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .timeline-day-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .timeline-scroll-area {
+    padding-right: 0;
+  }
+
+  .timeline-container {
+    padding-left: 28px;
+  }
+
+  .timeline-indicator {
+    left: -28px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .timeline-content:hover {
+    transform: none;
+  }
+
+  .timeline-dest-details h4 {
+    line-height: 1.25;
+  }
+
+  .dest-address-sub {
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .timeline-stay-node,
+  .timeline-travel-node,
+  .timeline-transfer-node {
+    height: auto;
+    min-height: 38px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .timeline-stay-content,
+  .timeline-travel-content,
+  .timeline-transfer-content {
+    flex-wrap: wrap;
+    line-height: 1.4;
+  }
+
+  .start-time-picker {
+    flex-wrap: wrap;
+  }
+}

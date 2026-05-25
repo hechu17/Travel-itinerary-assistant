@@ -1,0 +1,416 @@
+/* SmartPath Travel 核心网格布局样式 */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 16px;
+  gap: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Premium Header styling */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  flex-shrink: 0;
+  background: rgba(15, 15, 27, 0.4);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-glow-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.45);
+}
+
+.app-logo-icon {
+  color: white;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s infinite linear;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.header-title-block h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #ffffff 0%, #a78bfa 50%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+.subtitle {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Header Statistics indicators */
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  margin-right: 12px;
+}
+
+.h-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+}
+
+.h-stat-lbl {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.h-stat-val {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+}
+
+.h-stat-divider {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Live signal indicators */
+.live-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-success);
+}
+
+.pill-dot.blink {
+  animation: dot-blink 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes dot-blink {
+  from { opacity: 0.3; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.pill-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-success);
+  letter-spacing: 0.3px;
+}
+
+/* Dashboard Splitted Viewport Grid */
+.dashboard-grid-layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 16px;
+  overflow: hidden;
+  height: calc(100% - 68px); /* Height anchor constraint */
+}
+
+/* Left panel for tabs inputs */
+.dashboard-left-panel {
+  width: 420px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Lock overflow to allow inner scroll */
+  padding: 16px;
+  flex-shrink: 0;
+  background: rgba(10, 10, 18, 0.45);
+}
+
+/* Neon Tabs Switch bar */
+.neon-tabs-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.04);
+}
+
+.tab-btn.active {
+  color: white;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(6, 182, 212, 0.1) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+}
+
+.tab-btn.active span {
+  text-shadow: 0 0 5px rgba(255,255,255,0.4);
+}
+
+/* Tabs Body frame */
+.tab-viewport-body {
+  flex: 1;
+  overflow: hidden; /* Lock overflow to allow inner scroll */
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-pane-fade {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Ensure pane itself locks stretching */
+  animation: tab-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tab-fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Right panel for Amap maps viewport */
+.dashboard-right-panel {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop Responsive scaling logic */
+@media (max-width: 1024px) {
+  .dashboard-grid-layout {
+    flex-direction: column;
+    overflow-y: auto;
+    height: auto;
+  }
+  
+  .dashboard-left-panel {
+    width: 100%;
+    height: 520px;
+    flex-shrink: 0;
+  }
+  
+  .dashboard-right-panel {
+    width: 100%;
+    height: 480px;
+    flex-shrink: 0;
+  }
+  
+  .app-container {
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-container {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 10px;
+    gap: 10px;
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .header-left,
+  .header-right {
+    width: 100%;
+  }
+
+  .header-left {
+    min-width: 0;
+  }
+
+  .header-title-block {
+    min-width: 0;
+  }
+
+  .header-title-block h1 {
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+
+  .subtitle {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .header-right {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-stats {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+    margin-right: 0;
+    padding: 7px 10px;
+    border-radius: var(--border-radius-md);
+  }
+
+  .h-stat-item {
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .h-stat-val {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .live-pill {
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: var(--border-radius-md);
+  }
+
+  .dashboard-grid-layout {
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .dashboard-right-panel {
+    order: -1;
+    height: 48dvh;
+    min-height: 340px;
+  }
+
+  .dashboard-left-panel {
+    height: min(680px, 72dvh);
+    min-height: 520px;
+    padding: 12px;
+  }
+
+  .neon-tabs-bar {
+    gap: 6px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .tab-btn {
+    min-width: 0;
+    gap: 4px;
+    padding: 9px 3px;
+    font-size: 0.72rem;
+  }
+
+  .tab-btn span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-container {
+    padding: 8px;
+  }
+
+  .logo-glow-box {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-stats {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .h-stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .dashboard-right-panel {
+    height: 44dvh;
+    min-height: 300px;
+  }
+
+  .dashboard-left-panel {
+    min-height: 500px;
+  }
+}
