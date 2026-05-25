@@ -23,6 +23,19 @@ const INITIAL_EXPENSES = [
 ];
 
 const AMAP_LOAD_TIMEOUT_MS = 15000;
+const AMAP_ENV_KEY = import.meta.env.VITE_AMAP_KEY || '';
+
+function resolveAMapServiceHost(value) {
+  if (!value || typeof window === 'undefined') return '';
+  const normalized = value.replace(/\/$/, '');
+  if (/^https?:\/\//i.test(normalized)) return normalized;
+  return `${window.location.origin}${normalized.startsWith('/') ? normalized : `/${normalized}`}`;
+}
+
+const AMAP_SERVICE_HOST = resolveAMapServiceHost(
+  import.meta.env.VITE_AMAP_SERVICE_HOST ||
+  (import.meta.env.PROD ? '/_AMapService' : '')
+);
 
 function withTimeout(promise, timeoutMs, message) {
   let timeoutId;
@@ -55,7 +68,7 @@ export default function App() {
   });
 
   const [amapKey, setAmapKey] = useState(() => {
-    return localStorage.getItem('sp_amap_key') || '';
+    return localStorage.getItem('sp_amap_key') || AMAP_ENV_KEY;
   });
 
   const [amapSecCode, setAmapSecCode] = useState(() => {
@@ -101,7 +114,11 @@ export default function App() {
       return;
     }
 
-    if (amapSecCode) {
+    if (AMAP_SERVICE_HOST) {
+      window._AMapSecurityConfig = {
+        serviceHost: AMAP_SERVICE_HOST,
+      };
+    } else if (amapSecCode) {
       window._AMapSecurityConfig = {
         securityJsCode: amapSecCode,
       };
@@ -180,7 +197,11 @@ export default function App() {
     setAmapKey(key);
     setAmapSecCode(secCode);
     localStorage.setItem('sp_amap_key', key);
-    localStorage.setItem('sp_amap_seccode', secCode);
+    if (AMAP_SERVICE_HOST) {
+      localStorage.removeItem('sp_amap_seccode');
+    } else {
+      localStorage.setItem('sp_amap_seccode', secCode);
+    }
     
     setTimeout(() => {
       window.location.reload();
@@ -325,6 +346,7 @@ export default function App() {
             destinations={destinations}
             amapKey={amapKey}
             amapSecurityCode={amapSecCode}
+            amapServiceHost={AMAP_SERVICE_HOST}
             amapApi={amapApi}
             amapLoadError={amapLoadError}
             onSaveConfig={handleSaveMapConfig}

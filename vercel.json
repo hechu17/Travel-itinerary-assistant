@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/_AMapService/:path*",
+      "destination": "/api/amap/:path*"
+    }
+  ]
+}
+

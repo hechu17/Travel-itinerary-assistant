@@ -81,6 +81,7 @@ export default function MapContainer({
   destinations = [],
   amapKey = '',
   amapSecurityCode = '',
+  amapServiceHost = '',
   amapApi = null,
   amapLoadError = '',
   onSaveConfig,
@@ -185,7 +186,7 @@ export default function MapContainer({
       disposed = true;
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [amapKey, amapSecurityCode, amapApi, amapLoadError, onRoutesCalculated]);
+  }, [amapKey, amapSecurityCode, amapServiceHost, amapApi, amapLoadError, onRoutesCalculated]);
 
   useEffect(() => {
     return () => {
@@ -294,6 +295,7 @@ export default function MapContainer({
       referrer: document.referrer || '无',
       hasKey: Boolean(amapKey),
       hasSecurityCode: Boolean(amapSecurityCode),
+      usesServiceHost: Boolean(amapServiceHost),
     });
 
     const tests = [
@@ -621,7 +623,7 @@ export default function MapContainer({
                 <span>当前来源: {diagnosticContext.origin}</span>
                 <span>Host: {diagnosticContext.host}</span>
                 <span>Referrer: {diagnosticContext.referrer}</span>
-                <span>Key: {diagnosticContext.hasKey ? '已填写' : '未填写'} / 安全密钥: {diagnosticContext.hasSecurityCode ? '已填写' : '未填写'}</span>
+                <span>Key: {diagnosticContext.hasKey ? '已填写' : '未填写'} / 安全密钥: {diagnosticContext.usesServiceHost ? '代理模式' : diagnosticContext.hasSecurityCode ? '已填写' : '未填写'}</span>
               </div>
             )}
             {diagnosticResults.length > 0 && (

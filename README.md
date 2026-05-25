@@ -77,6 +77,32 @@ http://127.0.0.1:5173
 
 如果 Vite 使用了其他端口，也需要把对应地址加入白名单。
 
+## 生产环境 serviceHost 代理
+
+正式部署时建议使用高德 `serviceHost` 代理方案，不要把 `securityJsCode` 明文暴露在前端。
+
+本项目已内置 Vercel 代理：
+
+- 前端生产环境默认使用 `/_AMapService` 作为 `serviceHost`
+- `vercel.json` 会把 `/_AMapService/*` 转发到 `/api/amap/*`
+- `api/amap/[...path].js` 会在服务端读取 `AMAP_SECURITY_JS_CODE` 并转发到高德服务
+
+部署到 Vercel 时，需要配置环境变量：
+
+```txt
+VITE_AMAP_KEY=你的高德 Web JS API Key
+VITE_AMAP_SERVICE_HOST=/_AMapService
+AMAP_SECURITY_JS_CODE=你的高德 Security JS Code
+```
+
+其中：
+
+- `VITE_AMAP_KEY` 会进入前端包，属于可公开的 Web JS API Key。
+- `AMAP_SECURITY_JS_CODE` 只在 Vercel Serverless Function 中读取，不会打包进前端。
+- `VITE_AMAP_SERVICE_HOST` 不填时，生产构建会默认使用当前域名下的 `/_AMapService`。
+
+本地开发仍然可以使用页面设置弹窗手动填写 Key 和 Security JS Code。
+
 ## 地图服务能力
 
 当前项目会使用以下高德能力：
@@ -108,7 +134,6 @@ src/
 
 ## 注意事项
 
-- 高德 Key 和 Security JS Code 当前保存在浏览器 `localStorage`，适合本地开发和演示。
-- 如果要正式部署，建议通过服务端代理配置高德安全密钥，避免把 `securityJsCode` 明文暴露在前端。
+- 本地开发时，高德 Key 和 Security JS Code 可以保存在浏览器 `localStorage`。
+- 正式部署时，建议使用上面的 `serviceHost` 代理方案，避免把 `securityJsCode` 明文暴露在前端。
 - 旅游地点、预算和凭证配置同样使用浏览器 `localStorage` 保存，清理浏览器数据会重置这些信息。
-
