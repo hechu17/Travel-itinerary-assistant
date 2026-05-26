@@ -51,7 +51,7 @@
 }
 
 .header-title-block h1 {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family);
   font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: 0.8px;
@@ -101,7 +101,7 @@
 }
 
 .h-stat-val {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family);
   font-weight: 800;
 }
 

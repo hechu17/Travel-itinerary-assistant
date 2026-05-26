@@ -263,7 +263,7 @@
 
 .mock-map-empty h3,
 .map-empty-state h3 {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family);
   font-size: 1.3rem;
   color: var(--text-primary);
   margin-top: 18px;

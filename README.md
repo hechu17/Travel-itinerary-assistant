@@ -81,7 +81,43 @@ http://127.0.0.1:5173
 
 正式部署时建议使用高德 `serviceHost` 代理方案，不要把 `securityJsCode` 明文暴露在前端。
 
-本项目已内置 Vercel 代理：
+### CloudBase 部署
+
+面向中国大陆访问，推荐使用腾讯云 CloudBase：
+
+- `dist` 静态资源部署到 CloudBase 静态网站托管。
+- `cloudfunctions/amap-service` 部署为 HTTP 云函数。
+- 高德 `Security JS Code` 放在云函数环境变量 `AMAP_SECURITY_JS_CODE` 中。
+
+CloudBase 环境变量建议：
+
+```txt
+VITE_AMAP_KEY=你的高德 Web JS API Key
+VITE_AMAP_SERVICE_HOST=https://你的 HTTP 云函数域名/_AMapService
+AMAP_SECURITY_JS_CODE=你的高德 Security JS Code
+```
+
+其中：
+
+- `VITE_AMAP_KEY` 用于前端加载高德 JS API。
+- `VITE_AMAP_SERVICE_HOST` 指向 CloudBase HTTP 云函数代理地址。
+- `AMAP_SECURITY_JS_CODE` 只配置在 `amap-service` 云函数环境变量里，不要写进前端代码。
+
+部署步骤建议：
+
+1. 在腾讯云 CloudBase 创建环境。
+2. 在 CloudBase 静态网站托管中连接 GitHub 仓库或使用 CLI 部署。
+3. 构建命令填写 `npm run build`，输出目录填写 `dist`。
+4. 部署 `cloudfunctions/amap-service` 云函数。
+5. 为 `amap-service` 云函数配置环境变量 `AMAP_SECURITY_JS_CODE`。
+6. 开通该云函数的 HTTP 访问，并将得到的 HTTP 访问域名配置为前端环境变量 `VITE_AMAP_SERVICE_HOST`。
+7. 重新构建并部署前端。
+
+项目提供了 `cloudbaserc.example.json` 作为 CloudBase CLI 配置参考。复制为 `cloudbaserc.json` 后，将 `envId` 改成你的 CloudBase 环境 ID，再按实际控制台配置调整。
+
+### Vercel 部署
+
+本项目也保留了 Vercel 代理：
 
 - 前端生产环境默认使用 `/_AMapService` 作为 `serviceHost`
 - `vercel.json` 会把 `/_AMapService/*` 转发到 `/api/amap/*`

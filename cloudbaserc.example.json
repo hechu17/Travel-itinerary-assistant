@@ -1,0 +1,36 @@
+{
+  "envId": "your-cloudbase-env-id",
+  "version": "2.0",
+  "framework": {
+    "name": "travel-itinerary-assistant",
+    "plugins": {
+      "client": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "buildCommand": "npm run build",
+          "outputPath": "dist",
+          "cloudPath": "/"
+        }
+      },
+      "amapService": {
+        "use": "@cloudbase/framework-plugin-function",
+        "inputs": {
+          "functionRootPath": "cloudfunctions",
+          "functions": [
+            {
+              "name": "amap-service",
+              "timeout": 15,
+              "runtime": "Nodejs18.15",
+              "handler": "index.js",
+              "installDependency": true,
+              "envVariables": {
+                "AMAP_SECURITY_JS_CODE": "set-this-in-cloudbase-console"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+

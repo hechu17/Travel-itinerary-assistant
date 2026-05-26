@@ -8,7 +8,7 @@
 }
 
 .section-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family);
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
